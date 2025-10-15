@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<Auth.Models.ApplicationUser> UserManager
+
+@model IEnumerable<Auth.Models.ApplicationUser>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+
+
+
+<h2>All Registered Users</h2>
+<table class="table table-bordered table-hover">
+    <thead class="table-primary">
+        <tr>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.FullName</td>
+                <td>@user.PhoneNumber</td>
+                <td>
+                    @{
+                        var roles = await UserManager.GetRolesAsync(user);
+                        @string.Join(", ", roles)
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-warning" href="/Account/EditRole?id=@user.Id">Edit Role</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
