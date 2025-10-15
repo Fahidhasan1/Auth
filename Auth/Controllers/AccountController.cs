@@ -145,7 +145,7 @@ namespace Auth.Controllers
             await _userManager.RemoveFromRolesAsync(user, currentRoles);
             await _userManager.AddToRoleAsync(user, model.SelectedRole);
 
-            TempData["SuccessMessage"] = $"✅ {user.Email}'s role updated to {model.SelectedRole}";
+            TempData["SuccessMessage"] = $" {user.Email}'s role updated to {model.SelectedRole}";
             return RedirectToAction("UserList");
         }
 
